@@ -1,17 +1,24 @@
-var titleInput = $('.title').val();
+var titleInput = $('.title');
 var bodyInput = $('.body');
 var ideaStore = [];
-var storedData = localStorage.getItem("ideaArray");
-var displayObject = JSON.parse(storedData);
+var quality = 1;
 
-$('html').on('pageinit', function() {
-    loadIdeas();
-})
-
-function loadIdeas(){
-  alert('something');
-}
-
+// $(document).ready(function() {
+//     var displayObject = JSON.parse(localStorage.getItem("ideaStore"));
+//     if (displayObject) {
+//       ideaStore = displayObject;}
+//     loadIdeas();
+// });
+//
+// function loadIdeas(){
+//   for (var i = 0; i < ideaStore.length; i++) {
+//     var storedIdea = ideaStore[i];
+//     $('.idea').val(ideaStore);
+//   }
+//}
+// function appendList(title, body){
+//
+// }
 
 function addIdea(){
   var title = $('.title').val();
@@ -19,12 +26,12 @@ function addIdea(){
   var creativeThought = new Idea();
   ideaStore.push(creativeThought);
   return $('.ideacontainer ul').prepend("<li>" +
-                                    "<article>" +
-                                       "<input class = 'deleteButton' type = 'image' src = 'images/delete.svg' width = 20 height = 20>" +
+                                    "<article class='template'>" +
+                                       "<input class = 'deleteButton' type = 'image' src='images/delete.svg' width = 20 height = 20>" +
                                        "<p>" + title + "</p>" +
                                        "<p>"+ body + "</p>" +
-                                       "<input class = 'thumbsup' type = 'image' src='images/upvote.svg' width = 20 height = 20>" +
-                                       "<input class = 'thumbsdown' type = 'image' src='images/downvote.svg' width = 20 height = 20>" +
+                                       "<input class = 'thumbsUp' type = 'image' src='images/upvote.svg' width = 20 height = 20>" +
+                                       "<input class = 'thumbsDown' type = 'image' src='images/downvote.svg' width = 20 height = 20>" +
                                        "<div class = 'ranking'>ranking: swill</div>" +
                                      "</article>" +
                                    "</li>");
@@ -39,17 +46,22 @@ function Idea(title, body, id) {
 $('.save').on('click', function(){
   addIdea();
   commitToLocalStorage();
+  clearInputs();
 });
 
-function commitToLocalStorage() {
-  localStorage.setItem("ideaArray", JSON.stringify(ideaStore));
+function clearInputs() {
+  $('.title').val('');
+  $('.body').val('');
 }
 
+function commitToLocalStorage() {
+  localStorage.setItem("ideaStore", JSON.stringify(ideaStore)); }
+
+  $('.ideacontainer ul').on('click', '.deleteButton', function() {
+      $(this).parents('.template').remove();
+});
 
 
-
-  if (storedData) {
-    ideaStore = JSON.parse(storedData);}
     // for (i=0; i<ideaStore.length;i++){
     //   $('.ideacontainer ul').prepend("<li>" +
     //                                     "<article>" +
@@ -62,3 +74,12 @@ function commitToLocalStorage() {
     //                                      "</article>" +
     //                                    "</li>");
     // }
+
+
+        // function thumbsUp {
+        //     var
+        // }
+        //
+        // $('.thumbsUp').on('click', function() {
+        //
+        // })
