@@ -1,11 +1,14 @@
-var titleInput = $('.title');
+var titleInput = $('.title').val();
 var bodyInput = $('.body');
+var ideaStore = [];
 
 $('.save').on('click', function(){
   addIdea();
 });
 
 function addIdea(){
+  var creativeThought = new Idea();
+  ideaStore.push(creativeThought);
   var title = $('.title').val();
   var body = bodyInput.val();
   return $('.ideacontainer ul').prepend("<li>" +
@@ -17,4 +20,10 @@ function addIdea(){
                                        "<div class = 'ranking'>ranking: swill</div>" +
                                      "</article>" +
                                    "</li>");
+}
+
+function Idea(title, body, id) {
+  this.title = $('.title').val();;
+  this.body = $('.body').val();
+  this.id = Date.now();
 }
