@@ -1,8 +1,9 @@
 var titleInput = $('.title');
 var bodyInput = $('.body');
+var idea = [];
 
 $('.save').on('click', function(){
-  addIdea();
+  idea.push(addIdea());       //we want to add the output of addIdea() to the array "idea"
 });
 
 function addIdea(){
@@ -17,4 +18,11 @@ function addIdea(){
                                        "<div class = 'ranking'>ranking: swill</div>" +
                                      "</article>" +
                                    "</li>");
+}
+
+localStorage.setItem("ideaArray", JSON.stringify(idea));
+
+var storedData = localStorage.getItem("idea");
+if (storedData) {
+    idea = JSON.parse(storedData);
 }
