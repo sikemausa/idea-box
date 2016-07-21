@@ -3,22 +3,31 @@ var bodyInput = $('.body');
 var ideaStore = [];
 var quality = 1;
 
-// $(document).ready(function() {
-//     var displayObject = JSON.parse(localStorage.getItem("ideaStore"));
-//     if (displayObject) {
-//       ideaStore = displayObject;}
-//     loadIdeas();
-// });
-//
-// function loadIdeas(){
-//   for (var i = 0; i < ideaStore.length; i++) {
-//     var storedIdea = ideaStore[i];
-//     $('.idea').val(ideaStore);
-//   }
-//}
-// function appendList(title, body){
-//
-// }
+$(document).ready(function() {
+    var displayObject = JSON.parse(localStorage.getItem("ideaStore"));
+    if (displayObject) {
+      ideaStore = displayObject;}
+    loadIdeas();
+});
+
+function loadIdeas(){
+  for (var i = 0; i < ideaStore.length; i++) {
+    var storedIdea = ideaStore[i];
+
+    $("ul").append(
+      "<li>" +
+      "<article class='template'>" +
+      "<input class = 'deleteButton' type = 'image' src='images/delete.svg' width = 20 height = 20>" +
+      "<p>" + storedIdea.title + "</p>" +
+      "<p>"+ storedIdea.body + "</p>" +
+      "<input class = 'thumbsUp' type = 'image' src='images/upvote.svg' width = 20 height = 20>" +
+      "<input class = 'thumbsDown' type = 'image' src='images/downvote.svg' width = 20 height = 20>" +
+      "<div class = 'ranking'>ranking: swill</div>" +
+      "</article>" +
+      "</li>");
+    }
+  }
+
 
 function addIdea(){
   var title = $('.title').val();
