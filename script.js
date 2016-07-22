@@ -121,6 +121,11 @@ var IdeasRepo = {
     this.store();
   },
 
+  clear: function(){
+      $('.title').val('');
+      $('.body').val('');
+  },
+
   renderOnSave: function() {
     $idealist.html('');
     this._ideas.forEach(function(idea){
@@ -132,7 +137,7 @@ var IdeasRepo = {
         <p>${idea.body}</p>
         <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
         <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
-        <div class='ranking'>ranking: swill</div>
+        <div class='ranking'>ranking: </div>
         </article>
         </li>
         `);
@@ -151,7 +156,7 @@ var IdeasRepo = {
           <p>${idea.body}</p>
           <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
           <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
-          <div class='ranking'>ranking: swill</div>
+          <div class='ranking'>ranking: </div>
           </article>
           </li>
           `);
@@ -159,15 +164,21 @@ var IdeasRepo = {
       },
 
       buttonUp: function() {
-        if (this.quality === 'swill'){this.quality.prepend('yayaya');}
-        IdeasRepo.store();
-        },
+        if (this._ideas.filter(function(idea) {
+          return true;
+        }));
+      },
+
+
+
 
   };
+
 
 $('.save').on('click', function(){
   IdeasRepo.add($('.title').val(), $('.body').val());
   IdeasRepo.renderOnSave();
+  IdeasRepo.clear();
 });
 
 $('.ideacontainer ul').on('click', '.thumbsUp', function() {
@@ -179,6 +190,8 @@ $('ul').on('click', '.deleteButton', function() {
   IdeasRepo.remove(id); // We need to traverse to the correct part of the DOM to find the id in the html of this particular idea
   $(this).parents('.template').remove();
 });
+
+
 
 $('document').ready(function () {
   IdeasRepo.retrieve();
