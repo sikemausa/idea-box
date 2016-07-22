@@ -2,10 +2,11 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-h2 {
+span {
   font-size: 200%;
   margin-bottom: 15px;
   font-family: 'Roboto Slab', serif;
+  display: inline;
 }
 
 .idea-title {
@@ -56,11 +57,15 @@ input {
 }
 
 .search {
-  width: 95%;
+  width: 99%;
 }
 
 li {
   border-bottom: 2px solid black;
   margin: 10px;
   padding-bottom: 10px;
+}
+
+button {
+  text-decoration: none;
 }
