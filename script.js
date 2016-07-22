@@ -67,9 +67,7 @@ var $idealist = $('.ideacontainer ul');
 // function commitToLocalStorage() {
 //   localStorage.setItem("ideaStore", JSON.stringify(ideaStore)); }
 //
-//   $('.ideacontainer ul').on('click', '.deleteButton', function() {
-//       $(this).parents('.template').remove();
-// });
+
 //
 //
 //     // for (i=0; i<ideaStore.length;i++){
@@ -87,73 +85,105 @@ var $idealist = $('.ideacontainer ul');
 
 
 
-function Idea (name, body, id, quality) {
-  this.name = name;
+function Idea (title, body, id, quality) {
+  this.title = title;
   this.body = body;
   this.id = (id || Date.now());
   this.quality = (quality || 'swill');
 }
 
-var IdeasContainer = {
-  ideas:[],
+var IdeasRepo = {
+  _ideas:[],
 
   store: function(){
-    localStorage.setItem('ideas', JSON.stringify(this.ideas));
+    localStorage.setItem('ideas', JSON.stringify(this._ideas));
+  },
+
+  add: function(title, body){
+    this._ideas.push(new Idea(title, body));
+    this.store();
   },
 
   retrieve: function() {
     var retrieveIdeas = JSON.parse(localStorage.getItem('ideas'));
-    if (retrieveIdeas) {
-      for (var i = 0; i < retrieveIdeas.length; i++) {
-var idea = retrieveIdeas[i];
-this.ideas.push(new Idea(idea.name, idea.body, idea.id, idea.quality));
-      }
-    }
-  },
-
-  add: function(name, body){
-    this.ideas.push(new Idea(name, body));
-    this.store();
+    if (retrieveIdeas){
+      this._ideas = retrieveIdeas.map(function (idea){
+         return new Idea(idea.title, idea.body, idea.id, idea.quality);
+         });
+    };
   },
 
   remove: function(id){
-    id = psarseInt(id);
-    this.ideas = this.ideas.filter(function(idea){
+    id = parseInt(id);
+    this._ideas = this._ideas.filter(function(idea){
       return idea.id !== id;
     });
     this.store();
-    this.render();
   },
 
-  render: function() {
-    this.ideas.forEach(function(idea){
-      $idealist.append(`
-<li>
-<article class='template'>
-<input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
-<p>${idea.name}</p>
-<p>${idea.body}</p>
-<input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
-<input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
-<div class='ranking'>ranking: swill</div>
-</article>
-</li>
-`);
+  renderOnSave: function() {
+    $idealist.html('');
+    this._ideas.forEach(function(idea){
+      $idealist.prepend(`
+        <li id='${idea.id}'>
+        <article class='template'>
+        <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
+        <p>${idea.title}</p>
+        <p>${idea.body}</p>
+        <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
+        <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
+        <div class='ranking'>ranking: swill</div>
+        </article>
+        </li>
+        `);
       });
     },
 
-  display: function() {
-    this.idea
-    },
+
+    renderOnLoad: function() {
+      $idealist.html('');
+      this._ideas.forEach(function(idea){
+        $idealist.append(`
+          <li id='${idea.id}'>
+          <article class='template'>
+          <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
+          <p>${idea.title}</p>
+          <p>${idea.body}</p>
+          <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
+          <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
+          <div class='ranking'>ranking: swill</div>
+          </article>
+          </li>
+          `);
+        });
+      },
+
+      // buttonUp: function() {
+      //   debugger;
+      //   if (this.quality == 'swill'){
+      //     this.quality == 'plausible'}
+      //   if (this.quality == 'plausible'){
+      //     this.quality == 'genius'}
+      //   IdeasRepo.store();
+      //   },
 
   };
 
 $('.save').on('click', function(){
-  IdeasContainer.add($('.title').val(), $('.body').val());
+  IdeasRepo.add($('.title').val(), $('.body').val());
+  IdeasRepo.renderOnSave();
+});
 
+// $('.thumbsUp').on('click', function(){
+//   IdeasRepo.buttonUp();
+// });
+
+$('.ideacontainer ul').on('click', '.deleteButton', function() {
+  IdeasRepo.remove(id);
+  $(this).parents('.template').remove();
 });
 
 $('document').ready(function () {
-  IdeasContainer.retrieve();
-  IdeasContainer.render();
+  IdeasRepo.retrieve();
+  IdeasRepo.renderOnLoad();
 });
