@@ -60,10 +60,10 @@ input {
   width: 99%;
 }
 
-li {
-  border-bottom: 2px solid black;
+.template {
   margin: 10px;
   padding-bottom: 10px;
+  border-bottom: 2px solid black;
 }
 
 button {

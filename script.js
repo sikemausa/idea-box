@@ -158,14 +158,10 @@ var IdeasRepo = {
         });
       },
 
-      // buttonUp: function() {
-      //   debugger;
-      //   if (this.quality == 'swill'){
-      //     this.quality == 'plausible'}
-      //   if (this.quality == 'plausible'){
-      //     this.quality == 'genius'}
-      //   IdeasRepo.store();
-      //   },
+      buttonUp: function() {
+        if (this.quality === 'swill'){this.quality.prepend('yayaya');}
+        IdeasRepo.store();
+        },
 
   };
 
@@ -174,12 +170,13 @@ $('.save').on('click', function(){
   IdeasRepo.renderOnSave();
 });
 
-// $('.thumbsUp').on('click', function(){
-//   IdeasRepo.buttonUp();
-// });
+$('.ideacontainer ul').on('click', '.thumbsUp', function() {
+  IdeasRepo.buttonUp();
+});
 
-$('.ideacontainer ul').on('click', '.deleteButton', function() {
-  IdeasRepo.remove(id);
+$('ul').on('click', '.deleteButton', function() {
+  var id = parseInt(this.closest('li').id);
+  IdeasRepo.remove(id); // We need to traverse to the correct part of the DOM to find the id in the html of this particular idea
   $(this).parents('.template').remove();
 });
 
