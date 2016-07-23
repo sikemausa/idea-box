@@ -1,7 +1,7 @@
 var titleInput = $('.title');
 var bodyInput = $('.body');
 var ideaStore = [];
-var quality = 1;
+// var quality = 1;
 var $idealist = $('.ideacontainer ul');
 
 // $(document).ready(function() {
@@ -85,11 +85,13 @@ var $idealist = $('.ideacontainer ul');
 
 
 
-function Idea (title, body, id, quality) {
+function Idea (title, body, id = Date.now(), quality = 'swill') {
   this.title = title;
   this.body = body;
-  this.id = (id || Date.now());
-  this.quality = (quality || 'swill');
+  this.id = id;
+  // this.id = (id || Date.now());
+  this.quality = quality;
+  // this.quality = (quality || 'swill');
 }
 
 var IdeasRepo = {
@@ -110,7 +112,7 @@ var IdeasRepo = {
       this._ideas = retrieveIdeas.map(function (idea){
          return new Idea(idea.title, idea.body, idea.id, idea.quality);
          });
-    };
+    }
   },
 
   remove: function(id){
@@ -121,7 +123,30 @@ var IdeasRepo = {
     this.store();
   },
 
-  clear: function(){
+  findId: function(id) {
+    return this._ideas.find(function(idea){
+      return idea.id === id;
+    });
+  },
+
+  //   find the id quality for the instance object
+  //   replace the quality based on what it is using IF statements or FOR loop
+  //   restore the new quality in localStorage
+  //   display new quality in DOM
+
+  UpVote: function(id) {
+    id = parseInt(id);  // finding id for specific instance for that object
+    var changeQuality = IdeasRepo.findId(id);
+    if (changeQuality.quality = 'plausible') {
+        return ('genius');
+      };
+    if (changeQuality.quality = 'swill') {
+        return ('plausible');
+      };
+    this.store();
+  },
+
+  clear: function() {
       $('.title').val('');
       $('.body').val('');
   },
@@ -163,15 +188,6 @@ var IdeasRepo = {
         });
       },
 
-      buttonUp: function() {
-        if (this._ideas.filter(function(idea) {
-          return true;
-        }));
-      },
-
-
-
-
   };
 
 
@@ -181,8 +197,9 @@ $('.save').on('click', function(){
   IdeasRepo.clear();
 });
 
-$('.ideacontainer ul').on('click', '.thumbsUp', function() {
-  IdeasRepo.buttonUp();
+$('ul').on('click', '.thumbsUp', function() {
+  var id = parseInt(this.closest('li').id);
+  IdeasRepo.UpVote(id);
 });
 
 $('ul').on('click', '.deleteButton', function() {
@@ -190,7 +207,6 @@ $('ul').on('click', '.deleteButton', function() {
   IdeasRepo.remove(id); // We need to traverse to the correct part of the DOM to find the id in the html of this particular idea
   $(this).parents('.template').remove();
 });
-
 
 
 $('document').ready(function () {
