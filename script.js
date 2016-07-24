@@ -1,7 +1,5 @@
 var titleInput = $('.title');
 var bodyInput = $('.body');
-// var ideaStore = [];
-// var quality = 1;
 var $idealist = $('.ideacontainer ul');
 
 function Idea (title, body, id = Date.now(), quality = 'swill') {
@@ -32,7 +30,6 @@ var IdeasRepo = {
          });
     }
     this.render();
-    // this.renderOnSave();
   },
 
   render: function() {
@@ -60,16 +57,6 @@ var IdeasRepo = {
     });
     this.store();
   },
-
-  // findId: function(title, body, id) {
-  //   return this._ideas.find(function(title, body)
-  //     idea.title === title;
-  //     idea.body ===body;
-  //   );
-  //   return this._ideas.find(function(idea){
-  //     return idea.id === id;
-  //   });
-  // },
 
   findId: function(id) {
     return this._ideas.find(function(idea){
@@ -126,39 +113,12 @@ var IdeasRepo = {
     });
   },
 
-  // for (var i=0; i < myArray.length; i++) {
-  //   if (myArray[i].name === nameKey) {
-  //     return myArray[i];
-  //   }
-  // }
-
-
-
-    // renderOnLoad: function() {
-    //   $idealist.html('');
-    //   this._ideas.forEach(function(idea){
-    //     $idealist.append(`
-    //       <li id='${idea.id}'>
-    //       <article class='template'>
-    //       <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
-    //       <p>${idea.title}</p>
-    //       <p>${idea.body}</p>
-    //       <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
-    //       <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
-    //       <div class='ranking'>ranking: ${idea.quality}</div>
-    //       </article>
-    //       </li>
-    //       `);
-    //     });
-    //   },
-
   };
 
 
 $('.save').on('click', function(){
   IdeasRepo.add($('.title').val(), $('.body').val());
   IdeasRepo.render();
-  // IdeasRepo.renderOnSave();
   IdeasRepo.clear();
 });
 
