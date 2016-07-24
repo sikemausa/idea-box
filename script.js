@@ -43,7 +43,7 @@ var IdeasRepo = {
           <article class='template'>
             <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
             <p class = "titlehtml" contenteditable = "true">${idea.title}</p>
-            <p class = "titlehtml" contenteditable = "true">${idea.body}</p>
+            <p class = "bodyhtml" contenteditable = "true">${idea.body}</p>
             <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
             <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
             <div class='ranking'>ranking: ${idea.quality}</div>
@@ -115,7 +115,6 @@ var IdeasRepo = {
   },
 
   search: function(title, body) {
-    debugger;
     var filter = $(this).val();
     $('.idea').each(function() {
       if($(this).text().search(new RegExp(filter, 'i')) < 0) {
@@ -193,7 +192,7 @@ $("ul").on('keydown', '.titlehtml', function(e) {
     if(e.keyCode == 13)
     {
         e.preventDefault();
-        this.blur();
+        $(this).focusout();
     }
 });
 
@@ -201,7 +200,32 @@ $("ul").on('keydown', '.bodyhtml', function(e) {
     if(e.keyCode == 13)
     {
         e.preventDefault();
-        this.blur();
-        this.store();
+        $(this).focusout();
     }
+});
+
+$("ul").on('focusout', '.titlehtml', function(e) {
+  var id = parseInt(this.closest('li').id);
+  var retrieve = JSON.parse(localStorage.getItem('ideas'));
+  var title = this.textContent;
+  for (var i = 0; i < retrieve.length; i++) {
+    if (retrieve[i].id === id){
+      retrieve[i].title = title;
+    }
+  }
+  localStorage.setItem('ideas', JSON.stringify(retrieve));
+  this.blur();
+});
+
+$("ul").on('focusout', '.bodyhtml', function(e) {
+  var id = parseInt(this.closest('li').id);
+  var retrieve = JSON.parse(localStorage.getItem('ideas'));
+  var body = this.textContent;
+  for (var i = 0; i < retrieve.length; i++) {
+    if (retrieve[i].id === id){
+      retrieve[i].body = body;
+    }
+  }
+  localStorage.setItem('ideas', JSON.stringify(retrieve));
+  this.blur();
 });
