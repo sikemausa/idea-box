@@ -214,6 +214,7 @@ $("ul").on('focusout', '.titlehtml', function(e) {
     }
   }
   localStorage.setItem('ideas', JSON.stringify(retrieve));
+  IdeasRepo.retrieve();
   this.blur();
 });
 
@@ -227,5 +228,6 @@ $("ul").on('focusout', '.bodyhtml', function(e) {
     }
   }
   localStorage.setItem('ideas', JSON.stringify(retrieve));
+  IdeasRepo.retrieve();
   this.blur();
 });
