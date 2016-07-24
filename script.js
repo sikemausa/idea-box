@@ -35,6 +35,24 @@ var IdeasRepo = {
     // this.renderOnSave();
   },
 
+  render: function() {
+    $idealist.html('');
+    this._ideas.forEach(function(idea){
+      $idealist.append(`
+        <li id='${idea.id}'>
+          <article class='template'>
+            <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
+            <p>${idea.title}</p>
+            <p>${idea.body}</p>
+            <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
+            <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
+            <div class='ranking'>ranking: ${idea.quality}</div>
+            </article>
+        </li>
+        `);
+      });
+    },
+
   remove: function(id){
     id = parseInt(id);
     this._ideas = this._ideas.filter(function(idea){
@@ -43,11 +61,22 @@ var IdeasRepo = {
     this.store();
   },
 
+  // findId: function(title, body, id) {
+  //   return this._ideas.find(function(title, body)
+  //     idea.title === title;
+  //     idea.body ===body;
+  //   );
+  //   return this._ideas.find(function(idea){
+  //     return idea.id === id;
+  //   });
+  // },
+
   findId: function(id) {
     return this._ideas.find(function(idea){
       return idea.id === id;
     });
   },
+
 
   //   find the id quality for the instance object
   //   replace the quality based on what it is using IF statements or FOR loop
@@ -81,34 +110,30 @@ var IdeasRepo = {
   },
 
   clear: function() {
-      $('.title').val('');
-      $('.body').val('');
+    $('.title').val('');
+    $('.body').val('');
   },
 
-  //render quality function
-  //find id
-  //
+  search: function(title, body) {
+    debugger;
+    var filter = $(this).val();
+    $('.idea').each(function() {
+      if($(this).text().search(new RegExp(filter, 'i')) < 0) {
+        $(this).fadeOut();
+      }
+      else {
+        $(this).fadeIn();
+      }
+    });
+  },
 
-  render: function() {
-    $idealist.html('');
-    this._ideas.forEach(function(idea){
-      $idealist.append(`
-        <li id='${idea.id}'>
-        <article class='template'>
-        <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
-        <p>${idea.title}</p>
-        <p>${idea.body}</p>
-        <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
-        <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
-        <div class='ranking'>ranking: ${idea.quality}</div>
-        </article>
-        </li>
-        `);
-      });
-    },
+  // for (var i=0; i < myArray.length; i++) {
+  //   if (myArray[i].name === nameKey) {
+  //     return myArray[i];
+  //   }
+  // }
 
-//unshift and prepend
-//push and append
+
 
     // renderOnLoad: function() {
     //   $idealist.html('');
@@ -148,11 +173,14 @@ $('ul').on('click', '.thumbsDown', function() {
   IdeasRepo.downVote(id);
 });
 
-
 $('ul').on('click', '.deleteButton', function() {
   var id = parseInt(this.closest('li').id);
   IdeasRepo.remove(id); // We need to traverse to the correct part of the DOM to find the id in the html of this particular idea
   $(this).parents('.template').remove();
+});
+
+$('.search').on('keyup', function () {
+  IdeasRepo.search();
 });
 
 $('document').ready(function () {
