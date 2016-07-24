@@ -42,8 +42,8 @@ var IdeasRepo = {
         <li id='${idea.id}'>
           <article class='template'>
             <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
-            <p>${idea.title}</p>
-            <p>${idea.body}</p>
+            <p class = "titlehtml" contenteditable = "true">${idea.title}</p>
+            <p class = "titlehtml" contenteditable = "true">${idea.body}</p>
             <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
             <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
             <div class='ranking'>ranking: ${idea.quality}</div>
@@ -187,4 +187,21 @@ $('document').ready(function () {
   IdeasRepo.retrieve();
   IdeasRepo.render();
   // IdeasRepo.renderOnLoad();
+});
+
+$("ul").on('keydown', '.titlehtml', function(e) {
+    if(e.keyCode == 13)
+    {
+        e.preventDefault();
+        this.blur();
+    }
+});
+
+$("ul").on('keydown', '.bodyhtml', function(e) {
+    if(e.keyCode == 13)
+    {
+        e.preventDefault();
+        this.blur();
+        this.store();
+    }
 });
