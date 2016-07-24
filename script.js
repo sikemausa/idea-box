@@ -1,97 +1,14 @@
 var titleInput = $('.title');
 var bodyInput = $('.body');
-var ideaStore = [];
+// var ideaStore = [];
 // var quality = 1;
 var $idealist = $('.ideacontainer ul');
-
-// $(document).ready(function() {
-//     var displayObject = JSON.parse(localStorage.getItem("ideaStore"));
-//     if (displayObject) {
-//       ideaStore = displayObject;}
-//     loadIdeas();
-// });
-//
-// function loadIdeas(){
-//   for (var i = 0; i < ideaStore.length; i++) {
-//     var storedIdea = ideaStore[i];
-//
-//     $("ul").append(
-//       "<li>" +
-//       "<article class='template'>" +
-//       "<input class = 'deleteButton' type = 'image' src='images/delete.svg' width = 20 height = 20>" +
-//       "<p>" + storedIdea.title + "</p>" +
-//       "<p>"+ storedIdea.body + "</p>" +
-//       "<input class = 'thumbsUp' type = 'image' src='images/upvote.svg' width = 20 height = 20>" +
-//       "<input class = 'thumbsDown' type = 'image' src='images/downvote.svg' width = 20 height = 20>" +
-//       "<div class = 'ranking'>ranking: swill</div>" +
-//       "</article>" +
-//       "</li>");
-//     }
-//   }
-//
-//
-// function addIdea(){
-//   var title = $('.title').val();
-//   var body = bodyInput.val();
-//   var creativeThought = new Idea();
-//   ideaStore.push(creativeThought);
-//   return $('.ideacontainer ul').prepend("<li>" +
-//                                     "<article class='template'>" +
-//                                        "<input class = 'deleteButton' type = 'image' src='images/delete.svg' width = 20 height = 20>" +
-//                                        "<p>" + title + "</p>" +
-//                                        "<p>"+ body + "</p>" +
-//                                        "<input class = 'thumbsUp' type = 'image' src='images/upvote.svg' width = 20 height = 20>" +
-//                                        "<input class = 'thumbsDown' type = 'image' src='images/downvote.svg' width = 20 height = 20>" +
-//                                        "<div class = 'ranking'>ranking: swill</div>" +
-//                                      "</article>" +
-//                                    "</li>");
-// }
-//
-// function Idea(title, body, id) {
-//   this.title = $('.title').val();;
-//   this.body = $('.body').val();
-//   this.id = Date.now();
-// }
-//
-// $('.save').on('click', function(){
-//   addIdea();
-//   commitToLocalStorage();
-//   clearInputs();
-// });
-//
-// function clearInputs() {
-//   $('.title').val('');
-//   $('.body').val('');
-// }
-//
-// function commitToLocalStorage() {
-//   localStorage.setItem("ideaStore", JSON.stringify(ideaStore)); }
-//
-
-//
-//
-//     // for (i=0; i<ideaStore.length;i++){
-//     //   $('.ideacontainer ul').prepend("<li>" +
-//     //                                     "<article>" +
-//     //                                        "<input class = 'deleteButton' type = 'image' src = 'images/delete.svg' width = 20 height = 20>" +
-//     //                                        "<p>" + title + "</p>" +
-//     //                                        "<p>"+ body + "</p>" +
-//     //                                        "<input class = 'thumbsup' type = 'image' src='images/upvote.svg' width = 20 height = 20>" +
-//     //                                        "<input class = 'thumbsdown' type = 'image' src='images/downvote.svg' width = 20 height = 20>" +
-//     //                                        "<div class = 'ranking'>ranking: swill</div>" +
-//     //                                      "</article>" +
-//     //                                    "</li>");
-//     // }
-
-
 
 function Idea (title, body, id = Date.now(), quality = 'swill') {
   this.title = title;
   this.body = body;
   this.id = id;
-  // this.id = (id || Date.now());
   this.quality = quality;
-  // this.quality = (quality || 'swill');
 }
 
 var IdeasRepo = {
@@ -99,10 +16,11 @@ var IdeasRepo = {
 
   store: function(){
     localStorage.setItem('ideas', JSON.stringify(this._ideas));
+    this.retrieve();
   },
 
   add: function(title, body){
-    this._ideas.push(new Idea(title, body));
+    this._ideas.unshift(new Idea(title, body));
     this.store();
   },
 
@@ -113,6 +31,8 @@ var IdeasRepo = {
          return new Idea(idea.title, idea.body, idea.id, idea.quality);
          });
     }
+    this.render();
+    // this.renderOnSave();
   },
 
   remove: function(id){
@@ -134,16 +54,30 @@ var IdeasRepo = {
   //   restore the new quality in localStorage
   //   display new quality in DOM
 
-  UpVote: function(id) {
+  upVote: function(id) {
     id = parseInt(id);  // finding id for specific instance for that object
-    var changeQuality = IdeasRepo.findId(id);
-    if (changeQuality.quality = 'plausible') {
-        return ('genius');
-      };
-    if (changeQuality.quality = 'swill') {
-        return ('plausible');
-      };
-    this.store();
+    var upgradingQuality = IdeasRepo.findId(id);
+    if (upgradingQuality.quality == 'plausible') {
+      upgradingQuality.quality = 'genius';
+      } else if (upgradingQuality.quality == 'swill') {
+      upgradingQuality.quality = 'plausible';
+      } else {
+      upgradingQuality.quality = 'genius';
+      }
+      return this.store();
+  },
+
+  downVote: function(id) {
+    id = parseInt(id);  // finding id for specific instance for that object
+    var upgradingQuality = IdeasRepo.findId(id);
+    if (upgradingQuality.quality == 'genius') {
+      upgradingQuality.quality = 'plausible';
+    } else if (upgradingQuality.quality == 'plausible') {
+      upgradingQuality.quality = 'swill';
+      } else {
+      upgradingQuality.quality = 'swill';
+      }
+      return this.store();
   },
 
   clear: function() {
@@ -151,7 +85,11 @@ var IdeasRepo = {
       $('.body').val('');
   },
 
-  renderOnSave: function() {
+  //render quality function
+  //find id
+  //
+
+  render: function() {
     $idealist.html('');
     this._ideas.forEach(function(idea){
       $idealist.prepend(`
@@ -162,45 +100,54 @@ var IdeasRepo = {
         <p>${idea.body}</p>
         <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
         <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
-        <div class='ranking'>ranking: </div>
+        <div class='ranking'>ranking: ${idea.quality}</div>
         </article>
         </li>
         `);
       });
     },
 
+//unshift and prepend
+//push and append
 
-    renderOnLoad: function() {
-      $idealist.html('');
-      this._ideas.forEach(function(idea){
-        $idealist.append(`
-          <li id='${idea.id}'>
-          <article class='template'>
-          <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
-          <p>${idea.title}</p>
-          <p>${idea.body}</p>
-          <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
-          <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
-          <div class='ranking'>ranking: </div>
-          </article>
-          </li>
-          `);
-        });
-      },
+    // renderOnLoad: function() {
+    //   $idealist.html('');
+    //   this._ideas.forEach(function(idea){
+    //     $idealist.append(`
+    //       <li id='${idea.id}'>
+    //       <article class='template'>
+    //       <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
+    //       <p>${idea.title}</p>
+    //       <p>${idea.body}</p>
+    //       <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
+    //       <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
+    //       <div class='ranking'>ranking: ${idea.quality}</div>
+    //       </article>
+    //       </li>
+    //       `);
+    //     });
+    //   },
 
   };
 
 
 $('.save').on('click', function(){
   IdeasRepo.add($('.title').val(), $('.body').val());
-  IdeasRepo.renderOnSave();
+  IdeasRepo.render();
+  // IdeasRepo.renderOnSave();
   IdeasRepo.clear();
 });
 
 $('ul').on('click', '.thumbsUp', function() {
   var id = parseInt(this.closest('li').id);
-  IdeasRepo.UpVote(id);
+  IdeasRepo.upVote(id);
 });
+
+$('ul').on('click', '.thumbsDown', function() {
+  var id = parseInt(this.closest('li').id);
+  IdeasRepo.downVote(id);
+});
+
 
 $('ul').on('click', '.deleteButton', function() {
   var id = parseInt(this.closest('li').id);
@@ -208,8 +155,8 @@ $('ul').on('click', '.deleteButton', function() {
   $(this).parents('.template').remove();
 });
 
-
 $('document').ready(function () {
   IdeasRepo.retrieve();
-  IdeasRepo.renderOnLoad();
+  IdeasRepo.render();
+  // IdeasRepo.renderOnLoad();
 });
