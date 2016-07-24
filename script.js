@@ -92,7 +92,7 @@ var IdeasRepo = {
   render: function() {
     $idealist.html('');
     this._ideas.forEach(function(idea){
-      $idealist.prepend(`
+      $idealist.append(`
         <li id='${idea.id}'>
         <article class='template'>
         <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
