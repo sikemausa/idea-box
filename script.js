@@ -38,8 +38,8 @@ var IdeasRepo = {
       $idealist.append(`
         <li id='${idea.id}'>
           <article class='template'>
-            <input class='deleteButton' type='image' src='images/delete.svg' width='20px' height='20px'>
-            <p class = "titlehtml" contenteditable = "true">${idea.title}</p>
+            <input class='delete-button' type='image' src='images/delete.svg' width='20px' height='20px'>
+            <h3 class = "titlehtml" contenteditable = "true">${idea.title}</h3>
             <p class = "bodyhtml" contenteditable = "true">${idea.body}</p>
             <input class='thumbsUp' type='image' src='images/upvote.svg' width='20px' height='20px'>
             <input class='thumbsDown' type='image' src='images/downvote.svg' width='20' height='20'>
@@ -119,7 +119,7 @@ $('ul').on('click', '.thumbsDown', function() {
   IdeasRepo.downVote(id);
 });
 
-$('ul').on('click', '.deleteButton', function() {
+$('ul').on('click', '.delete-button', function() {
   var id = parseInt(this.closest('li').id);
   IdeasRepo.remove(id); // We need to traverse to the correct part of the DOM to find the id in the html of this particular idea
   $(this).parents('.template').remove();
@@ -180,7 +180,7 @@ $('.search-idea').on('keyup', function(event) {
     if ($(this).text().search(new RegExp(searchContent, 'i')) < 0) {
       $(this).hide();
     } else {
-      $(this.show);
+      $(this).show();
     }
   });
 });

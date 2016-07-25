@@ -13,6 +13,10 @@ span {
   color: #00A79D;
 }
 
+.idea-box {
+  color: #6D6E71;
+}
+
 .inputcontainer{
   display: flex;
   flex-direction: column;
@@ -52,7 +56,7 @@ input {
 .ideacontainer {
   width: 60%;
   margin: auto;
-  text-align: center;
+  /* text-align: center; */
   margin-top: 20px;
 }
 
@@ -61,11 +65,36 @@ input {
 }
 
 .template {
-  margin: 10px;
+  /* border: 2px solid red; */
   padding-bottom: 10px;
   border-bottom: 2px solid black;
+  position: relative;
 }
 
 button {
   text-decoration: none;
+}
+
+h3 {
+  font-size: 30px;
+  float: left;
+  font-family: 'Roboto Slab', serif;
+  color: #6D6E71;
+  /* border: 2px  solid blue; */
+  margin-top: 10px;
+  width: 70%;
+}
+
+.delete-button {
+  position: absolute;
+  right: 10px;
+  width: 20px;
+  top: 5px;
+}
+
+.bodyhtml {
+  display: block;
+  clear:both;
+  color: #939598;
+  padding-top: 15px;
 }
