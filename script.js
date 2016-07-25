@@ -64,11 +64,6 @@ var IdeasRepo = {
     });
   },
 
-  //   find the id quality for the instance object
-  //   replace the quality based on what it is using IF statements or FOR loop
-  //   restore the new quality in localStorage
-  //   display new quality in DOM
-
   upVote: function(id) {
     id = parseInt(id);  // finding id for specific instance for that object
     var upgradingQuality = IdeasRepo.findId(id);
