@@ -97,4 +97,25 @@ h3 {
   clear:both;
   color: #939598;
   padding-top: 15px;
+  padding-bottom: 45px;
+}
+
+.thumbsUp {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 20px;
+}
+
+.thumbsDown {
+  position: absolute;
+  bottom: 0px;
+  left: 30px;
+  width: 20px;
+}
+
+.ranking {
+  position: absolute;
+  bottom: 15px;
+  left: 70px;
 }
