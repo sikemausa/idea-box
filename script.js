@@ -46,9 +46,9 @@ var IdeasRepo = {
             <div class='ranking'>ranking: ${idea.quality}</div>
             </article>
         </li>
-        `);
-      });
-    },
+      `);
+    });
+  },
 
   remove: function(id){
     id = parseInt(id);
@@ -69,12 +69,12 @@ var IdeasRepo = {
     var upgradingQuality = IdeasRepo.findId(id);
     if (upgradingQuality.quality == 'plausible') {
       upgradingQuality.quality = 'genius';
-      } else if (upgradingQuality.quality == 'swill') {
+    } else if (upgradingQuality.quality == 'swill') {
       upgradingQuality.quality = 'plausible';
-      } else {
+    } else {
       upgradingQuality.quality = 'genius';
-      }
-      return this.store();
+    }
+    return this.store();
   },
 
   downVote: function(id) {
@@ -84,18 +84,18 @@ var IdeasRepo = {
       upgradingQuality.quality = 'plausible';
     } else if (upgradingQuality.quality == 'plausible') {
       upgradingQuality.quality = 'swill';
-      } else {
+    } else {
       upgradingQuality.quality = 'swill';
-      }
-      return this.store();
+    }
+    return this.store();
   },
 
   clear: function() {
     $('.title').val('');
     $('.body').val('');
     $('.search-idea').val('');
-  }
-  };
+  }, 
+};
 
 
 $('.save').on('click', function(){
