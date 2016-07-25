@@ -56,7 +56,6 @@ input {
 .ideacontainer {
   width: 60%;
   margin: auto;
-  /* text-align: center; */
   margin-top: 20px;
 }
 
@@ -65,9 +64,8 @@ input {
 }
 
 .template {
-  /* border: 2px solid red; */
   padding-bottom: 10px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #D1D3D4;
   position: relative;
 }
 
@@ -80,7 +78,6 @@ h3 {
   float: left;
   font-family: 'Roboto Slab', serif;
   color: #6D6E71;
-  /* border: 2px  solid blue; */
   margin-top: 10px;
   width: 70%;
 }
@@ -118,4 +115,5 @@ h3 {
   position: absolute;
   bottom: 15px;
   left: 70px;
+  color: #6D6E71;
 }
