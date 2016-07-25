@@ -75,19 +75,12 @@ button {
 }
 
 h3 {
-  font-size: 30px;
+  font-size: 20px;
   float: left;
   font-family: 'Roboto Slab', serif;
   color: #6D6E71;
   margin-top: 10px;
   width: 70%;
-}
-
-.delete-button {
-  position: absolute;
-  right: 10px;
-  width: 20px;
-  top: 5px;
 }
 
 .bodyhtml {
@@ -98,7 +91,6 @@ h3 {
   padding-bottom: 45px;
 }
 
-
 .thumbsUp {
   background-image: url("images/upvote.svg");
   position: absolute;
@@ -107,40 +99,43 @@ h3 {
   width: 30px;
   height: 30px;
   background-repeat: no-repeat;
-}
-
-.thumbsDown {
-  background-image: url("images/downvote.svg");
-  position: absolute;
-  bottom: 0px;
-  left: 40px;
-  width: 30px;
-  height: 30px;
-}
-
-.ranking {
-  position: absolute;
-  bottom: 15px;
-  left: 80px;
+  margin-bottom: 10px;
 }
 
 .thumbsUp:hover {
   background-image: url("images/upvote-hover.svg");
 }
 
+.thumbsDown {
+  background-image: url("images/downvote.svg");
+  position: absolute;
+  bottom: 0px;
+  left: 35px;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
 .thumbsDown:hover {
   background-image: url("images/downvote-hover.svg");
+}
+
+.ranking {
+  position: absolute;
+  bottom: 15px;
+  left: 80px;
+  color: #6D6E71
 }
 
 .delete-button {
   background-image: url("images/delete.svg");
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 13px;
+  right: 5px;
   width: 30px;
   height: 30px;
 }
 
 .delete-button:hover{
-    background-image: url("images/delete-hover.svg");
+  background-image: url("images/delete-hover.svg");
 }
