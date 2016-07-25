@@ -64,7 +64,6 @@ var IdeasRepo = {
     });
   },
 
-
   //   find the id quality for the instance object
   //   replace the quality based on what it is using IF statements or FOR loop
   //   restore the new quality in localStorage
@@ -99,20 +98,8 @@ var IdeasRepo = {
   clear: function() {
     $('.title').val('');
     $('.body').val('');
-  },
-
-  search: function(title, body) {
-    var filter = $(this).val();
-    $('.idea').each(function() {
-      if($(this).text().search(new RegExp(filter, 'i')) < 0) {
-        $(this).fadeOut();
-      }
-      else {
-        $(this).fadeIn();
-      }
-    });
-  },
-
+    $('.search-idea').val('');
+  }
   };
 
 
@@ -138,14 +125,9 @@ $('ul').on('click', '.deleteButton', function() {
   $(this).parents('.template').remove();
 });
 
-$('.search').on('keyup', function () {
-  IdeasRepo.search();
-});
-
 $('document').ready(function () {
   IdeasRepo.retrieve();
   IdeasRepo.render();
-  // IdeasRepo.renderOnLoad();
 });
 
 $("ul").on('keydown', '.titlehtml', function(e) {
@@ -190,4 +172,16 @@ $("ul").on('focusout', '.bodyhtml', function(e) {
   localStorage.setItem('ideas', JSON.stringify(retrieve));
   IdeasRepo.retrieve();
   this.blur();
+});
+
+$('.search-idea').on('keyup', function(event) {
+  var searchContent = $(this).val().toLowerCase();
+  $('li').each(function() {
+    if ($(this).text().search(new RegExp(searchContent, 'i')) < 0) {
+      $(this).hide();
+    } else {
+      $(this.show);
+    }
+
+  });
 });
