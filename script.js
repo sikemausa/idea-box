@@ -94,9 +94,8 @@ var IdeasRepo = {
     $('.title').val('');
     $('.body').val('');
     $('.search-idea').val('');
-  }, 
+  },
 };
-
 
 $('.save').on('click', function(){
   IdeasRepo.add($('.title').val(), $('.body').val());
