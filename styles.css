@@ -27,14 +27,13 @@ span {
   font-family: 'Roboto Slab', serif;
 }
 
-
 input {
   height: 25px;
-  text-align: center;
   width: 60%;
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 15px;
 }
 
 .save {
@@ -75,7 +74,7 @@ button {
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 30px;
   float: left;
   font-family: 'Roboto Slab', serif;
   color: #6D6E71;
@@ -83,12 +82,19 @@ h3 {
   width: 70%;
 }
 
+.delete-button {
+  position: absolute;
+  right: 10px;
+  width: 20px;
+  top: 5px;
+}
+
 .bodyhtml {
   display: block;
   clear:both;
   color: #939598;
   padding-top: 15px;
-  padding-bottom: 45px;
+  margin-bottom: 60px;
 }
 
 .thumbsUp {
@@ -98,7 +104,6 @@ h3 {
   left: 0px;
   width: 30px;
   height: 30px;
-  background-repeat: no-repeat;
   margin-bottom: 10px;
 }
 
@@ -110,7 +115,7 @@ h3 {
   background-image: url("images/downvote.svg");
   position: absolute;
   bottom: 0px;
-  left: 35px;
+  left: 40px;
   width: 30px;
   height: 30px;
   margin-bottom: 10px;
@@ -124,13 +129,13 @@ h3 {
   position: absolute;
   bottom: 15px;
   left: 80px;
-  color: #6D6E71
+  color: #6D6E71;
 }
 
 .delete-button {
   background-image: url("images/delete.svg");
   position: absolute;
-  top: 13px;
+  top: 10px;
   right: 5px;
   width: 30px;
   height: 30px;
@@ -138,4 +143,66 @@ h3 {
 
 .delete-button:hover{
   background-image: url("images/delete-hover.svg");
+}
+
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+  span {
+    font-size: 400%;
+  }
+
+  input{
+    width: 80%;
+    font-size: 30px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  .title {
+    height: 40px;
+  }
+
+  .body {
+    height: 80px;
+  }
+
+  .save {
+    height: 70px;
+    width: 80%;
+    font-size: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .ideacontainer {
+    width: 80%;
+  }
+
+  .search-idea {
+    height: 50px;
+    font-size: 30px;
+  }
+
+  h3 {
+    font-size: 50px;
+  }
+
+  .bodyhtml {
+    font-size: 30px;
+  }
+
+  .ranking {
+    font-size: 30px;
+    left: 130px;
+    bottom: 20px;
+  }
+
+  button {
+    padding: 25px;
+  }
+
+  .thumbsDown {
+    left: 60px;
+  }
 }
