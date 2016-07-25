@@ -182,6 +182,5 @@ $('.search-idea').on('keyup', function(event) {
     } else {
       $(this.show);
     }
-
   });
 });
